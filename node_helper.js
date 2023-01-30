@@ -54,7 +54,7 @@ module.exports = NodeHelper.create({
 			const getInfoUrl = APIUrl + powerStationURLPart;
 
 			const powerStationDetails = {
-				powerStationId: payload.powerstationId
+				powerStationId: payload.config.powerstationId
 			}
 
 			const options = {
