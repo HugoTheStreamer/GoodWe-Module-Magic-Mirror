@@ -1,0 +1,105 @@
+img {
+	width: x;
+	height: 35px;
+	display: inline;
+}
+p {
+	display: inline;
+	font-size: 35px;
+	margin: 0px 0px 0px 15px;
+} 
+hr {
+	border-color: #666;
+}
+td {
+	padding: 0px 10px 0px 0px;
+}
+#attribution {
+	font-size: 20px;
+	margin: 0px;
+}
+.no-margin {
+	margin: 0;
+}
+.content {
+	display: flex;
+	flex-direction: column;
+}
+.mask {
+	position: relative;
+	overflow: hidden;
+	display: block;
+	width: 12.5rem;
+	height: 6.25rem;
+	margin-left: 1.5rem;
+	margin-top: 0.5rem;
+}
+  
+.semi-circle {
+	position: relative;
+	display: block;
+	width: 12.5rem;
+	height: 6.25rem;
+	background: linear-gradient(to right, #c0392b 0%, #f1c40f 50%, #1abc9c 100%);
+	border-radius: 50% 50% 50% 50%/100% 100% 0% 0%;
+	background: #000;
+}
+.semi-circle::before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	z-index: 2;
+	display: block;
+	width: 8.75rem;
+	height: 4.375rem;
+	margin-left: -4.375rem;
+	background: black;
+	border-radius: 50% 50% 50% 50%/100% 100% 0% 0%;
+}
+
+.semi-circle--mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 12.5rem;
+	height: 12.5rem;
+	background: transparent;
+	transform-origin: center center;
+	backface-visibility: hidden;
+	transition: all 0.3s ease-in-out;
+}
+.semi-circle--mask::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0%;
+	z-index: 2;
+	display: block;
+	width: 12.625rem;
+	height: 6.375rem;
+	margin: -1px 0 0 -1px;
+	background: #f2f2f2;
+	border-radius: 50% 50% 50% 50%/100% 100% 0% 0%;
+}
+
+.gauge--1 .semi-circle {
+	background:	 #1abc9c;
+}
+
+.gauge--2 .semi-circle {
+	background: #c0392b;
+}
+.gauge--2 .semi-circle--mask {
+	transform: rotate(20deg) translate3d(0, 0, 0);
+}
+
+.power-div {
+	width: 5rem;
+    height: 24px;
+    background: rgba(255,255,255,1);
+    border-radius: 12px;
+    box-shadow: 0px 2px 2px rgb(97 123 142 / 21%);
+	align-self: center;
+	text-align: center;
+}
