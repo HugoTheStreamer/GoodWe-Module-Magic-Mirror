@@ -135,7 +135,7 @@ Module.register("MMM-GoodWe", {
                 const inverter = this.inverters[i];
     
                 // if the inverter is offline, don't display a gauge
-                if (inverter.invert_full.status !== 1) return;
+                if (inverter.invert_full.status !== 1) continue;
     
                 var capacity = inverter.dict.left.filter(elem => elem.key === "capacity")[0].value;
                 var currentPower = inverter.dict.left.filter(elem => elem.key === "InverterPowerOfPlantMonitor")[0].value;
