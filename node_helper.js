@@ -3,7 +3,7 @@ var fetch = require("node-fetch");
 var NodeHelper = require("node_helper");
 
 const loginUrl = "https://www.semsportal.com/api/v2/Common/CrossLogin";
-const powerStationURLPart = "/v2/PowerStation/GetMonitorDetailByPowerstationId";
+const powerStationURLPart = "v2/PowerStation/GetMonitorDetailByPowerstationId";
 var SEMSToken = null;
 var APIUrl = null;
 
@@ -40,7 +40,7 @@ module.exports = NodeHelper.create({
 				console.log(`\x1b[32m[SEMS-API][${res.status}] - Authenticated\x1b[0m`);
 				return res.json();
 			} else {
-				console.log("Something went wrong")
+				console.log(`\x1b[31m[SEMS-API] - Something went wrong\x1b[0m`);
 			}
 		}).then((data) => {
 			return data;
@@ -72,7 +72,7 @@ module.exports = NodeHelper.create({
 					console.log(`\x1b[32m[SEMS-API][${res.status}] - Received Solar Data\x1b[0m`);
 					return res.json();
 				} else {
-					console.log("Something went wrong")
+					console.log(`\x1b[31m[SEMS-API] - Something went wrong\x1b[0m`);
 				}
 			}).then((data) => {
 				// return the data part of the api response
