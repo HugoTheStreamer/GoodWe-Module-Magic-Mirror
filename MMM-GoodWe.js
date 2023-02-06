@@ -169,8 +169,8 @@ Module.register("MMM-GoodWe", {
                 gaugeInverter.appendChild(maskWrap);
     
                 // calculate the percentage
-                const calculation = (parseInt(currentPower) / parseInt(capacity)) * 100;
-                var degree = Math.round(calculation);
+                const calculation = (parseInt(currentPower) / parseInt(capacity));
+                var degree = Math.round(calculation) * 360;
     
                 if (degree >= 360) {
                     // 360 is our max. degree and may not be proceeded.
@@ -258,7 +258,7 @@ Module.register("MMM-GoodWe", {
 
             // calculate percentage
             const math = (parseInt(this.currentPowerTotal) / parseInt(this.totalCapacity)) * 100;
-            var value = Math.round(math);
+            var value = Math.round(math) * 360;
 
             if (value >= 360) {
                 value = 360;
