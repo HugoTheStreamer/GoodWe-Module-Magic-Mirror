@@ -17,6 +17,7 @@ Module.register("MMM-GoodWe", {
         this.currentPowerTotal = 0;
         this.totalCapacity = 5600;
         this.loaded = false;
+        this.dayGeneration = 0;
 
         if (this.config.totalCapacity !== 0) {
             this.totalCapacity = this.config.totalCapacity;
@@ -76,6 +77,13 @@ Module.register("MMM-GoodWe", {
 
             this.currentPowerTotal = currentPower;
 
+            if (payload.kpi.power < 1) {
+                // convert to Watt if it is a small number in kW
+                this.dayGeneration = (payload.kpi.power * 1000).toFixed(0).toString() + " W"
+            } else {
+                this.dayGeneration = payload.kpi.power + " kWh";
+            }
+
             for (let i=0; i < payload.inverter.length; i++) {
                 // setup our array with inverters from the returned payload by SEMS
                 this.inverters[i] = payload.inverter[i];
@@ -92,7 +100,7 @@ Module.register("MMM-GoodWe", {
     // Override dom generator
     getDom: function() {
         var wrapper = document.createElement("div");
-        wrapper.className += "content-wrapper"
+        wrapper.className += "goodwe-content-wrapper"
         
         if (this.config.username === "" || this.config.password === "") {
             wrapper.innerHTML = "Missing configuration.";
@@ -118,7 +126,7 @@ Module.register("MMM-GoodWe", {
         }
 
         var sTitle = document.createElement("p");
-        sTitle.innerHTML = "Totaal: " + this.currentPowerTitle;
+        sTitle.innerHTML = "Vandaag: " + this.dayGeneration;
         sTitle.className += " thin normal content-title";
         imgDiv.appendChild(img);
         imgDiv.appendChild(sTitle);
@@ -162,7 +170,7 @@ Module.register("MMM-GoodWe", {
     
                 // calculate the percentage
                 const calculation = (parseInt(currentPower) / parseInt(capacity)) * 100;
-                var degree = Math.round(calculation) * 10;
+                var degree = Math.round(calculation);
     
                 if (degree >= 360) {
                     // 360 is our max. degree and may not be proceeded.
@@ -250,7 +258,7 @@ Module.register("MMM-GoodWe", {
 
             // calculate percentage
             const math = (parseInt(this.currentPowerTotal) / parseInt(this.totalCapacity)) * 100;
-            var value = Math.round(math) * 10;
+            var value = Math.round(math);
 
             if (value >= 360) {
                 value = 360;
@@ -258,7 +266,7 @@ Module.register("MMM-GoodWe", {
 
             totalGauge.style.backgroundImage = `radial-gradient(white 0, white 50%, transparent 50%, transparent 100%), conic-gradient(green ${value}deg, white 5deg, rgb(184, 184, 184) 0deg)`;
 
-            wrapper.appendChild(totalGauge);            
+            wrapper.appendChild(totalGauge);      
         }
 
         // return our document

@@ -1,7 +1,7 @@
 img {
-	width: x;
 	height: 25px;
 	display: inline;
+	vertical-align: sub;
 }
 p {
 	display: inline;
@@ -23,14 +23,12 @@ td {
 	margin: 0;
 }
 
-.content-wrapper {
+.goodwe-content-wrapper {
+	display: flex;
+	flex-direction: column;
 	max-width: 20rem;
 }
 
-.content {
-	display: flex;
-	flex-direction: column;
-}
 .power-div {
 	width: 5rem;
     height: 24px;
@@ -42,7 +40,9 @@ td {
 }
 
 .content-title {
-	font-size: 1.25rem;
+	font-family: var(--font-primary), Arial, Helvetica, sans-serif;
+	font-weight: 300;
+	font-size: 1rem;
 	color: white;
 }
 
@@ -56,25 +56,26 @@ td {
 
 .ring {
 	position: relative;
-	width: 5rem;
-	height: 5rem;
+	width: 3rem;
+	height: 3rem;
 	background-size: 100%;
 	background-repeat: no-repeat;
 	background-position: 9.2% 82.3%, 90.8% 82.3%, center center, center center;
 	border-radius: 50%;
 	border-style: none;
-	font-size: 1rem;
+	font-size: 0.625rem;
 }
 
 .ring--small {
-	width: 3rem;
-	height: 3rem;
-	font-size: 0.6rem;
+	width: 2rem;
+	height: 2rem;
+	font-size: 0.325rem;
 }
 
 .ring--total {
 	margin-top: 0.25rem;
-	margin-left: 2rem;
+	margin-left: 3.5rem;
+	align-self: flex-end;
 }
     
 .ring-value {
@@ -91,4 +92,6 @@ td {
 	display: flex;
 	flex-direction: row;
 	gap: 0.5rem;
+	justify-content: end;
+	margin-bottom: 0.25rem;
 }
