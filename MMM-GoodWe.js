@@ -18,6 +18,7 @@ Module.register("MMM-GoodWe", {
         this.totalCapacity = 5600;
         this.loaded = false;
         this.dayGeneration = 0;
+        this.invertersOffline = false;
 
         if (this.config.totalCapacity !== 0) {
             this.totalCapacity = this.config.totalCapacity;
@@ -66,7 +67,17 @@ Module.register("MMM-GoodWe", {
     // Handle node helper response
     socketNotificationReceived: function(notification, payload) {
         if (notification === "SOLAR_DATA") {
-            var currentPower = payload.inverter[0].out_pac + payload.inverter[1].out_pac
+            var currentPower = 0;
+
+            for (let i=0; i < payload.inverter.length; i++) {
+                // setup our array with inverters from the returned payload by SEMS
+                this.inverters[i] = payload.inverter[i];
+                currentPower = currentPower + payload.inverter[i].out_pac;
+            }
+
+            if (payload.inverter.filter(elem => elem.invert_full.status === 0).length === payload.inverter.length) {
+                this.invertersOffline = true;
+            }
 
             if (currentPower > 1000) {
                 // if more than 1000W is being generated in total, we should display it in kW. 
@@ -82,11 +93,6 @@ Module.register("MMM-GoodWe", {
                 this.dayGeneration = (payload.kpi.power * 1000).toFixed(0).toString() + " W"
             } else {
                 this.dayGeneration = payload.kpi.power + " kWh";
-            }
-
-            for (let i=0; i < payload.inverter.length; i++) {
-                // setup our array with inverters from the returned payload by SEMS
-                this.inverters[i] = payload.inverter[i];
             }
 
             this.loaded = true;
@@ -132,7 +138,7 @@ Module.register("MMM-GoodWe", {
         imgDiv.appendChild(sTitle);
 
         var divider = document.createElement("hr");
-        divider.className += " dimmed";
+        divider.className += "solar-width dimmed";
 
         if (this.config.showInverterGauges) {
             var gaugeRow = document.createElement("div");
@@ -242,7 +248,7 @@ Module.register("MMM-GoodWe", {
         wrapper.appendChild(divider);
         wrapper.appendChild(imgDiv);
 
-        if (this.config.showBottomTotalGauge) {
+        if (this.config.showBottomTotalGauge && !this.invertersOffline) {
             // setup bottom gauge
             var totalGauge = document.createElement("div");
             totalGauge.className += "ring ring--total";
