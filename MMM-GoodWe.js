@@ -77,6 +77,8 @@ Module.register("MMM-GoodWe", {
 
             if (payload.inverter.filter(elem => elem.invert_full.status === 0).length === payload.inverter.length) {
                 this.invertersOffline = true;
+            } else {
+                this.invertersOffline = false;
             }
 
             if (currentPower > 1000) {
@@ -184,8 +186,8 @@ Module.register("MMM-GoodWe", {
                 }
     
                 // set the circle radius
-                inverterWrap.style.backgroundImage = `radial-gradient(white 0, white 50%, transparent 50%, transparent 100%), conic-gradient(green ${degree}deg, white 5deg, rgb(184, 184, 184) 0deg)`;
-    
+                inverterWrap.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${degree}deg, white 5deg, rgb(255 255 255 / 0%) 0deg)`;
+                
                 // append the gauge to the flexbox
                 gaugeRow.appendChild(inverterWrap);
             }
@@ -270,7 +272,7 @@ Module.register("MMM-GoodWe", {
                 value = 360;
             }
 
-            totalGauge.style.backgroundImage = `radial-gradient(white 0, white 50%, transparent 50%, transparent 100%), conic-gradient(green ${value}deg, white 5deg, rgb(184, 184, 184) 0deg)`;
+            totalGauge.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${value}deg, white 5deg, rgb(255 255 255 / 0%) 0deg)`;
 
             wrapper.appendChild(totalGauge);      
         }
