@@ -75,7 +75,7 @@ Module.register("MMM-GoodWe", {
                 currentPower = currentPower + payload.inverter[i].out_pac;
             }
 
-            if (payload.inverter.filter(elem => elem.invert_full.status === 0).length === payload.inverter.length) {
+            if (payload.inverter.filter(elem => elem.invert_full.status !== 1).length === payload.inverter.length) {
                 this.invertersOffline = true;
             } else {
                 this.invertersOffline = false;
