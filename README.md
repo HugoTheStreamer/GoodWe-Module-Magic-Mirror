@@ -11,25 +11,25 @@ A Solar Module for MagicMirror2 designed to integrate with a GoodWe System
  **Example:**
 ```
 {
-			module: 'MMM-GoodWe',
-			position: 'bottom_right',
-			config: {
-				username: "test@gmail.com", // Your GoodWe account email
-				password: "test", // Your GoodWe Password
-				powerstationId: "test-id", // The ID of your powerstation
-				totalCapacity: 5600, // The total capacity all your inverters can handle
-				updateIntervalMinutes: 0, // How often the data should be refreshed, defaults to every 5 minutes unless set to a value higher than or equal to 1.
-				showInverterGauges: true, // Show the gauges at the top
-				showBottomTotalGauge: true, // Show the large gauge at the bottom
-				showInterverDetail: true, // Show the details of the inverters
-				enableCustomGaugeColors: false, // give the gauges your own color, use hex codes or keywords see (https://www.w3.org/wiki/CSS/Properties/color/keywords)
-				customGaugeColors: {
-					innerCircleColor: "#3a455e", // color of the inner circle of the gauge
-					outerCircleColor: "transparent", // color of the outer circle of the gauge, by default transparent
-					currentValueRingColor: "red" // color of the ring indicating the value/percentage
-				}
-			}
-		 },
+  module: 'MMM-GoodWe',
+  position: 'bottom_right',
+  config: {
+    username: "test@gmail.com", // Your GoodWe account email
+    password: "test", // Your GoodWe Password
+    powerstationId: "test-id", // The ID of your powerstation
+    totalCapacity: 5600, // The total capacity all your inverters can handle
+    updateIntervalMinutes: 0, // How often the data should be refreshed, defaults to every 5 minutes unless set to a value higher than or equal to 1.
+    showInverterGauges: true, // Show the gauges at the top
+    showBottomTotalGauge: true, // Show the large gauge at the bottom
+    showInterverDetail: true, // Show the details of the inverters
+    enableCustomGaugeColors: false, // give the gauges your own color, use hex codes or keywords see (https://www.w3.org/wiki/CSS/Properties/color/keywords)
+    customGaugeColors: {
+      innerCircleColor: "#3a455e", // color of the inner circle of the gauge
+      outerCircleColor: "transparent", // color of the outer circle of the gauge, by default transparent
+      currentValueRingColor: "red" // color of the ring indicating the value/percentage
+    }
+  }
+  },
 ```
 **Note:** Only enter your credentials in the `config.js` file. Your credentials are yours alone, _do not_ post or use it elsewhere.
 
