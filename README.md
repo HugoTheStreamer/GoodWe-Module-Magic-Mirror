@@ -29,7 +29,7 @@ A Solar Module for MagicMirror2 designed to integrate with a GoodWe System
       currentValueRingColor: "red" // color of the ring indicating the value/percentage
     }
   }
-  },
+},
 ```
 **Note:** Only enter your credentials in the `config.js` file. Your credentials are yours alone, _do not_ post or use it elsewhere.
 
