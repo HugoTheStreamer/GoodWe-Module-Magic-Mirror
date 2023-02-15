@@ -9,8 +9,7 @@ Module.register("MMM-GoodWe", {
     start: async function() {
         // Logging appears in Chrome developer tools console
         Log.info("Starting module: " + this.name);
-
-        this.titles = ["Huidig Vermogen", "Vandaag opgewekt", "Totaal opgewekt", "Huidig Vermogen", "Vandaag opgewekt", "Totaal opgewekt"];
+        this.titles = ["Huidig Vermogen", "Vandaag opgewekt", "Totaal opgewekt"];
         this.suffixes = ["kW", "kWh", "kWh", "kW", "kWh", "kWh"];
         this.inverters = [];
         this.currentPowerTitle = "";
@@ -19,6 +18,8 @@ Module.register("MMM-GoodWe", {
         this.loaded = false;
         this.dayGeneration = 0;
         this.invertersOffline = false;
+        this.customGaugeColors = this.config.customGaugeColors;
+        this.goodWeOptions = null;
 
         if (this.config.totalCapacity !== 0) {
             this.totalCapacity = this.config.totalCapacity;
@@ -31,6 +32,7 @@ Module.register("MMM-GoodWe", {
 
         // get our token so that we can request our data
         this.authenticateUser();
+        this.loadGoodWeOptions();
 
         if (this.config.basicHeader) {
             this.data.header = 'GoodWe PV';
@@ -46,13 +48,19 @@ Module.register("MMM-GoodWe", {
 
     //Import additional CSS Styles
     getStyles: function() {
-    return ['solar.css']
+        return ['solar.css']
     },
 
     authenticateUser: function() {
         Log.info("SolarApp: Retrieving Token"); 
 
         this.sendSocketNotification("LOGIN_USER", this.config);
+    },
+
+    loadGoodWeOptions: function() {
+        Log.info("SolarApp: Retrieving Options"); 
+
+        this.sendSocketNotification("LOAD_OPTIONS", null);
     },
 
     //Contact node helper for solar data
@@ -102,6 +110,8 @@ Module.register("MMM-GoodWe", {
         } else if (notification === "LOGIN_USER") {
             Log.info(`%c[SEMS-API][OK] - Authenticated`, "color: green");
             this.getSolarData();
+        } else if (notification === "LOAD_OPTIONS") {
+            this.goodWeOptions = payload;
         }
     },
 
@@ -186,7 +196,12 @@ Module.register("MMM-GoodWe", {
                 }
     
                 // set the circle radius
-                inverterWrap.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${degree}deg, white 5deg, rgb(255 255 255 / 0%) 0deg)`;
+                if (this.config.enableCustomGaugeColors) {
+                    inverterWrap.style.backgroundImage = `radial-gradient(${this.customGaugeColors.innerCircleColor} 0px, ${this.customGaugeColors.innerCircleColor} 50%, transparent 50%, transparent 100%), 
+                    conic-gradient(${this.customGaugeColors.currentValueRingColor} ${value}deg, ${this.customGaugeColors.outerCircleColor} 0deg)`;
+                } else {
+                    inverterWrap.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${value}deg, transparent 0deg)`;
+                }
                 
                 // append the gauge to the flexbox
                 gaugeRow.appendChild(inverterWrap);
@@ -195,7 +210,7 @@ Module.register("MMM-GoodWe", {
             // append our gauges at the top
             wrapper.appendChild(gaugeRow);
         }
-
+        
         if (this.config.showInterverDetail) {
             for (let i=0; i < this.inverters.length; i++) {
                 // display additional info about our inverters in tables
@@ -234,12 +249,60 @@ Module.register("MMM-GoodWe", {
                     titleTr.innerHTML = this.titles[j];
                     dataTr.innerHTML = resultsArray[j];
                     titleTr.className += " medium regular bright title-row";
-                    dataTr.classname += " medium light normal title-row";
+                    dataTr.className += " medium regular bright title-row";
     
                     row.appendChild(titleTr);
                     row.appendChild(dataTr);
     
                     tb.appendChild(row);
+                }
+
+                for (let j=0; j < this.goodWeOptions.config.left.length; j++) {
+                    // left column
+                    var field = this.goodWeOptions.config.left[j];
+
+                    if (field.enabled === false) continue;
+
+                    var fieldRow = document.createElement("tr");
+    
+                    var fieldtitleTr = document.createElement("td");
+                    var fielddataTr = document.createElement("td");
+
+                    var apiFieldLeft = inverter.dict.left.filter(elem => elem.key === field.API_field)[0];
+
+                    fieldtitleTr.innerHTML = field.NL_title;
+                    fielddataTr.innerHTML = apiFieldLeft.value + " " + apiFieldLeft.unit;
+                    fieldtitleTr.className += " medium regular bright title-row";
+                    fielddataTr.className += " medium regular bright title-row";
+
+                    fieldRow.appendChild(fieldtitleTr);
+                    fieldRow.appendChild(fielddataTr);
+
+                    tb.appendChild(fieldRow);
+                }
+
+                for (let j=0; j < this.goodWeOptions.config.right.length; j++) {
+                    // right column
+                    var fieldRight = this.goodWeOptions.config.right[j];
+
+                    if (fieldRight.enabled === false) continue;
+
+                    var fieldRightRow = document.createElement("tr");
+    
+                    var fieldRighttitleTd = document.createElement("td");
+                    var fieldRightdataTd = document.createElement("td");
+
+                    var apiField = inverter.dict.right.filter(elem => elem.key === fieldRight.API_field)[0];
+
+                    fieldRighttitleTd.innerHTML = fieldRight.NL_title;
+                    fieldRightdataTd.innerHTML = apiField.value + " " + apiField.unit;
+                    fieldRighttitleTd.className += " medium regular bright title-row";
+                    fieldRightdataTd.className += " medium regular bright title-row";
+
+                    fieldRightRow.appendChild(fieldRighttitleTd);
+                    fieldRightRow.appendChild(fieldRightdataTd);
+
+                    tb.appendChild(fieldRightRow);
                 }
     
                 wrapper.appendChild(tb);
@@ -272,7 +335,12 @@ Module.register("MMM-GoodWe", {
                 value = 360;
             }
 
-            totalGauge.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${value}deg, white 5deg, rgb(255 255 255 / 0%) 0deg)`;
+            if (this.config.enableCustomGaugeColors) {
+                totalGauge.style.backgroundImage = `radial-gradient(${this.customGaugeColors.innerCircleColor} 0px, ${this.customGaugeColors.innerCircleColor} 50%, transparent 50%, transparent 100%), 
+                conic-gradient(${this.customGaugeColors.currentValueRingColor} ${value}deg, ${this.customGaugeColors.outerCircleColor} 0deg)`;
+            } else {
+                totalGauge.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${value}deg, transparent 0deg)`;
+            }
 
             wrapper.appendChild(totalGauge);      
         }

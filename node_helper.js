@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 var fetch = require("node-fetch");
 var NodeHelper = require("node_helper");
+var GoodWeOptions = require("./goodwe-options.json");
 
 const loginUrl = "https://www.semsportal.com/api/v2/Common/CrossLogin";
 const powerStationURLPart = "v2/PowerStation/GetMonitorDetailByPowerstationId";
@@ -85,6 +86,8 @@ module.exports = NodeHelper.create({
 				
 				self.sendSocketNotification("LOGIN_USER", "Success");	
 			});
+		} else if (notification === "LOAD_OPTIONS") {
+			self.sendSocketNotification("LOAD_OPTIONS", GoodWeOptions);
 		}
 	}
 });
