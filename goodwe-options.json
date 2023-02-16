@@ -1,5 +1,25 @@
 {
     "config": {
+        "main": [
+            {
+                "name": "Huidig Vermogen",
+                "NL_title": "Huidig Vermogen:",
+                "EN_title": "Current Power:",
+                "enabled": true
+            },
+            {
+                "name": "Day Revenue",
+                "NL_title": "Vandaag opgewekt:",
+                "EN_title": "Day Revenue:",
+                "enabled": true
+            },
+            {
+                "name": "Total Revenue",
+                "NL_title": "Totaal opgewekt:",
+                "EN_title": "Total Revenue:",
+                "enabled": true
+            }
+        ],
         "left": [
             {
                 "name": "Device Name",

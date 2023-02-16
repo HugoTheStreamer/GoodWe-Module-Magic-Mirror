@@ -240,13 +240,14 @@ Module.register("MMM-GoodWe", {
                 resultsArray[1] = inverter.eday + " kWh";
                 resultsArray[2] = inverter.etotal + " kWh";
     
-                for (let j=0; j < resultsArray.length; j++) {
+                for (let j=0; j < this.goodWeOptions.config.main.length; j++) {
+                    if (this.goodWeOptions.config.main[j].enabled === false) continue;
                     var row = document.createElement("tr");
     
                     var titleTr = document.createElement("td");
                     var dataTr = document.createElement("td");
     
-                    titleTr.innerHTML = this.titles[j];
+                    titleTr.innerHTML = this.goodWeOptions.config.main[j].NL_title;
                     dataTr.innerHTML = resultsArray[j];
                     titleTr.className += " medium regular bright title-row";
                     dataTr.className += " medium regular bright title-row";
