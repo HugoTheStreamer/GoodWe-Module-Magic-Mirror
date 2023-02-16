@@ -198,9 +198,9 @@ Module.register("MMM-GoodWe", {
                 // set the circle radius
                 if (this.config.enableCustomGaugeColors) {
                     inverterWrap.style.backgroundImage = `radial-gradient(${this.customGaugeColors.innerCircleColor} 0px, ${this.customGaugeColors.innerCircleColor} 50%, transparent 50%, transparent 100%), 
-                    conic-gradient(${this.customGaugeColors.currentValueRingColor} ${value}deg, ${this.customGaugeColors.outerCircleColor} 0deg)`;
+                    conic-gradient(${this.customGaugeColors.currentValueRingColor} ${degree}deg, ${this.customGaugeColors.outerCircleColor} 0deg)`;
                 } else {
-                    inverterWrap.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${value}deg, transparent 0deg)`;
+                    inverterWrap.style.backgroundImage = `radial-gradient(#3a455e 0px, #3a455e 50%, transparent 50%, transparent 100%), conic-gradient(green ${degree}deg, transparent 0deg)`;
                 }
                 
                 // append the gauge to the flexbox
