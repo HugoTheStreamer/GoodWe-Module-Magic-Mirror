@@ -133,6 +133,7 @@ Module.register("MMM-GoodWe", {
 
         var imgDiv = document.createElement("div");
         var img = document.createElement("img");
+        img.className += "solar-image"
 
         const hours = new Date().getHours()
         const isDayTime = hours > 6 && hours < 20;  
@@ -145,12 +146,12 @@ Module.register("MMM-GoodWe", {
 
         var sTitle = document.createElement("p");
         sTitle.innerHTML = "Vandaag: " + this.dayGeneration;
-        sTitle.className += " thin normal content-title";
+        sTitle.className += " thin normal main-title content-title";
         imgDiv.appendChild(img);
         imgDiv.appendChild(sTitle);
 
         var divider = document.createElement("hr");
-        divider.className += "solar-width dimmed";
+        divider.className += "solar-width dimmed h-ruler";
 
         if (this.config.showInverterGauges) {
             var gaugeRow = document.createElement("div");
@@ -246,11 +247,11 @@ Module.register("MMM-GoodWe", {
     
                     var titleTr = document.createElement("td");
                     var dataTr = document.createElement("td");
-    
+
                     titleTr.innerHTML = this.goodWeOptions.config.main[j].NL_title;
                     dataTr.innerHTML = resultsArray[j];
-                    titleTr.className += " medium regular bright title-row";
-                    dataTr.className += " medium regular bright title-row";
+                    titleTr.className += " medium regular bright title-row table-cell";
+                    dataTr.className += " medium regular bright title-row table-cell";
     
                     row.appendChild(titleTr);
                     row.appendChild(dataTr);
@@ -273,8 +274,8 @@ Module.register("MMM-GoodWe", {
 
                     fieldtitleTr.innerHTML = field.NL_title;
                     fielddataTr.innerHTML = apiFieldLeft.value + " " + apiFieldLeft.unit;
-                    fieldtitleTr.className += " medium regular bright title-row";
-                    fielddataTr.className += " medium regular bright title-row";
+                    fieldtitleTr.className += " medium regular bright title-row table-cell";
+                    fielddataTr.className += " medium regular bright title-row table-cell";
 
                     fieldRow.appendChild(fieldtitleTr);
                     fieldRow.appendChild(fielddataTr);
@@ -297,8 +298,8 @@ Module.register("MMM-GoodWe", {
 
                     fieldRighttitleTd.innerHTML = fieldRight.NL_title;
                     fieldRightdataTd.innerHTML = apiField.value + " " + apiField.unit;
-                    fieldRighttitleTd.className += " medium regular bright title-row";
-                    fieldRightdataTd.className += " medium regular bright title-row";
+                    fieldRighttitleTd.className += " medium regular bright title-row table-cell";
+                    fieldRightdataTd.className += " medium regular bright title-row table-cell";
 
                     fieldRightRow.appendChild(fieldRighttitleTd);
                     fieldRightRow.appendChild(fieldRightdataTd);

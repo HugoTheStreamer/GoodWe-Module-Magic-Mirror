@@ -1,24 +1,23 @@
-img {
+.solar-image {
 	height: 25px;
 	display: inline;
 	vertical-align: sub;
 }
-p {
-	display: inline;
-	font-size: 35px;
-	margin: 0px 0px 0px 15px;
-} 
-hr {
+
+.h-ruler {
 	border-color: #666;
 }
-td {
+
+.table-cell {
 	padding: 0px 10px 0px 0px;
 	color: white;
 }
+
 #attribution {
 	font-size: 20px;
 	margin: 0px;
 }
+
 .no-margin {
 	margin: 0;
 }
@@ -50,6 +49,11 @@ td {
 	color: white;
 	text-align: left;
 	margin-top: 0.5rem;
+}
+
+.main-title {
+	display: inline;
+	margin: 0px 0px 0px 15px;
 }
 
 .offline-status {
